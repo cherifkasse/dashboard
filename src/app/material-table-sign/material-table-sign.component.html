@@ -1,0 +1,33 @@
+<div class="example-loading-shade"
+     *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="example-table-container">
+  <table mat-table
+         matSort
+         [dataSource]="dataSource1"
+         class="table mat-elevation-z8"
+  >
+
+
+    <ng-container matColumnDef="cle">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="changeSorting('Operations.signaturekey')"> CLE SIGNATAIRE</th>
+      <td mat-cell *matCellDef="let element"> {{element['Operations.signaturekey']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="changeSorting('Operations.datesignatureNew')"> DATE SIGNATURE</th>
+      <td mat-cell *matCellDef="let element"> {{element['Operations.datesignatureNew']}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+    <!--<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+  </table>
+</div>
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent.emit($event)"
+></mat-paginator>

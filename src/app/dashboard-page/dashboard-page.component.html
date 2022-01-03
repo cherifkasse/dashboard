@@ -1,0 +1,112 @@
+<div class="grid-container">
+  <div class="kpi-wrap">
+    <mat-grid-list [cols]="cols" rowHeight="131px">
+      <mat-grid-tile *ngFor="let card of KPICards" [colspan]="1" [rowspan]="1">
+        <app-kpi-card [difference]="card.difference"
+                      [duration]="card.duration"
+                      [progress]="card.progress"
+                      [query]="card.query"
+                      [title]="card.title"
+                      class="kpi-card"
+        ></app-kpi-card>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </div>
+  <div class="bs-example">
+   <!-- <div class="container">
+      <div class="row">
+        <div class="col-md-12 bg-light text-right">
+          <button (click)="onClickDownload($event)" class="btn btn-primary" type="button">Exporter PDF</button>
+        </div>
+      </div>
+    </div>-->
+    <div class="top-actions">
+      <button mat-icon-button color="primary" (click)="openPDF()">
+        <mat-icon>save_alt</mat-icon>
+      </button>
+    </div>
+
+    <div id="content" #content>
+
+      <mat-grid-list [cols]="chartCols" rowHeight="510px">
+        <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
+          <mat-card class="dashboard-card">
+            <mat-card-header class="dashboard-card__header">
+              <mat-card-title>
+                <h3>{{card.title}}</h3>
+                <div >
+                  <div *ngIf="card.hasDatePick && card.title=='Certificats'" >
+                    <button [matMenuTriggerFor]="menu" aria-label="Toggle menu" class="more-button" mat-icon-button>
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    Date de début:
+                    <input [(ngModel)]="start_date" [matDatepicker]="picker1" id="val1" matInput>
+                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker1 [(ngModel)]="start_date"></mat-datepicker>
+                    Date de fin:
+                    <input [(ngModel)]="end_date" [matDatepicker]="picker2" matInput>
+                    <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker2 [(ngModel)]="end_date"></mat-datepicker>
+                    <button (click)="dateRangeCalendar()" [disabled]="!start_date  || !end_date " class="btn btn-primary">
+                      Voir
+                    </button>
+                    <!-- <p>date:{{start_date}}</p>-->
+                    <mat-menu #menu="matMenu" xPosition="before">
+                      <button (click)="changeDateRange('This year')" mat-menu-item>Cette année</button>
+                      <button (click)="changeDateRange('Last year')" mat-menu-item>L'année dernière</button>
+                      <button (click)="changeDateRange('This month')" mat-menu-item>Ce mois</button>
+                      <button (click)="changeDateRange('This week')" mat-menu-item>Cette semaine</button>
+                      <button (click)="changeDateRange('yesterday')" mat-menu-item>Hier</button>
+                      <button (click)="changeDateRange('today')" mat-menu-item>Aujourd'hui</button>
+
+                    </mat-menu>
+                  </div>
+                </div>
+
+                <div *ngIf="card.title=='Signatures'">
+                  <button [matMenuTriggerFor]="menu" aria-label="Toggle menu" class="more-button" mat-icon-button>
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  Date de début:
+                  <input [(ngModel)]="start_date_s" [matDatepicker]="picker1s" id="val2" matInput>
+                  <mat-datepicker-toggle [for]="picker1s" matSuffix></mat-datepicker-toggle>
+                  <mat-datepicker #picker1s [(ngModel)]="start_date_s"></mat-datepicker>
+                  Date de fin:
+                  <input [(ngModel)]="end_date_s" [matDatepicker]="picker2s" matInput>
+                  <mat-datepicker-toggle [for]="picker2s" matSuffix></mat-datepicker-toggle>
+                  <mat-datepicker #picker2s [(ngModel)]="end_date_s"></mat-datepicker>
+                  <button (click)="dateRangeCalendar_sign()" [disabled]="!start_date_s  || !end_date_s "
+                          class="btn btn-primary">Voir
+                  </button>
+                  <!-- <p>date:{{start_date}}</p>-->
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button (click)="changeDateRange_sign('This year')" mat-menu-item>Cette année</button>
+                    <button (click)="changeDateRange_sign('Last year')" mat-menu-item>L'année dernière</button>
+                    <button (click)="changeDateRange_sign('This month')" mat-menu-item>Ce mois</button>
+                    <button (click)="changeDateRange_sign('This week')" mat-menu-item>Cette semaine</button>
+                    <button (click)="changeDateRange_sign('yesterday')" mat-menu-item>Hier</button>
+                    <button (click)="changeDateRange_sign('today')" mat-menu-item>Aujourd'hui</button>
+                  </mat-menu>
+                </div>
+              </mat-card-title>
+            </mat-card-header>
+            <!--<hr>-->
+
+              <mat-card-content class="dashboard-card-content">
+                <div>
+                  <app-bar-chart *ngIf="card.chart === 'bar'" [query]="card.query"></app-bar-chart>
+                  <app-bar-chart *ngIf="card.chart === 'bar_sign'" [query]="card.query_sign"></app-bar-chart>
+                  <!--<app-doughnut-chart [query]="card.query" *ngIf="card.chart === 'doughnut'"></app-doughnut-chart>-->
+                </div>
+              </mat-card-content>
+
+
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+
+  </div>

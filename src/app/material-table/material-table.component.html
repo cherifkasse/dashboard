@@ -1,0 +1,49 @@
+<div class="example-loading-shade"
+     *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="example-table-container">
+  <table mat-table
+         matSort
+         [dataSource]="dataSource"
+         class="table mat-elevation-z8"
+  >
+
+
+
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="changeSorting('Beneficiaires.prenomnom')"> Nom complet</th>
+      <td mat-cell *matCellDef="let element"> {{element['Beneficiaires.prenomnom']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tel">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="changeSorting('Beneficiaires.tel')"> Télephone</th>
+      <td mat-cell *matCellDef="let element"> {{element['Beneficiaires.tel']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="mail">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="changeSorting('Beneficiaires.email')"> Adresse mail</th>
+      <td mat-cell *matCellDef="let element"> {{element['Beneficiaires.email']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cni">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="changeSorting('Beneficiaires.cnid')"> CNI</th>
+      <td mat-cell *matCellDef="let element"> {{element['Beneficiaires.cnid']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="changeSorting('Beneficiaires.datecreationNew')"> Date enrollement</th>
+      <td mat-cell *matCellDef="let element"> {{element['Beneficiaires.datecreationNew'] | date}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <!--<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+  </table>
+</div>
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent.emit($event)"
+></mat-paginator>
